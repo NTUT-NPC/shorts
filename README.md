@@ -18,7 +18,7 @@
 
 [permanent]
 "tat/android" = "https://play.google.com/store/apps/details?id=club.ntut.npc.tat"
-"tat/ios" = "https://apps.apple.com/tw/app/tat-%E5%8C%97%E7%A7%91%E7%94%9F%E6%B4%BB/id1513875597"
+"tat/ios" = "https://apps.apple.com/tw/app/id1513875597"
 ```
 
 2. 開
