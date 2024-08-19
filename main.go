@@ -63,14 +63,14 @@ func watchRedirectsFile() {
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	slug := r.URL.Path[1:] // Remove the leading slash
 
-	log.Printf("Redirecting %s", slug)
-
 	if url, ok := redirects.Permanent[slug]; ok {
+		log.Printf("Permanently redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
 		return
 	}
 
 	if url, ok := redirects.Temporary[slug]; ok {
+		log.Printf("Temporary redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusFound)
 		return
 	}
