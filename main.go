@@ -21,7 +21,7 @@ func main() {
 	go watchRedirectsFile()
 
 	http.HandleFunc("/", handleRedirect)
-	log.Fatal(http.ListenAndServe(":80", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func updateRedirects() {

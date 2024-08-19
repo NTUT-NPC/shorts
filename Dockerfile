@@ -12,6 +12,6 @@ FROM alpine AS production
 
 COPY --from=build /usr/src/app/shorts .
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD [ "./shorts" ]
