@@ -19,14 +19,14 @@ var redirects Redirects
 const redirectsFile = "config/redirects.toml"
 
 func main() {
-	updateRedirects()
+	readRedirects()
 	go watchRedirectsFile()
 
 	http.HandleFunc("/", handleRedirect)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-func updateRedirects() {
+func readRedirects() {
 	file, err := os.ReadFile(redirectsFile)
 	if err != nil {
 		log.Fatal(err)
@@ -57,7 +57,7 @@ func watchRedirectsFile() {
 	// Watch for events
 	for event := range watcher.Events {
 		if event.Has(fsnotify.Write) && event.Name == redirectsFile {
-			go updateRedirects()
+			go readRedirects()
 		}
 	}
 }
