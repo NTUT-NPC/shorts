@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/BurntSushi/toml"
 	"github.com/fsnotify/fsnotify"
-	"github.com/pelletier/go-toml/v2"
 )
 
 type Redirects struct {
