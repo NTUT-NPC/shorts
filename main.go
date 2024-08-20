@@ -16,6 +16,8 @@ type Redirects struct {
 
 var redirects Redirects
 
+const redirectsFile = "config/redirects.toml"
+
 func main() {
 	updateRedirects()
 	go watchRedirectsFile()
@@ -25,7 +27,7 @@ func main() {
 }
 
 func updateRedirects() {
-	file, err := os.ReadFile("config/redirects.toml")
+	file, err := os.ReadFile(redirectsFile)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +56,7 @@ func watchRedirectsFile() {
 
 	// Watch for events
 	for event := range watcher.Events {
-		if event.Has(fsnotify.Write) && event.Name == "config/redirects.toml" {
+		if event.Has(fsnotify.Write) && event.Name == redirectsFile {
 			go updateRedirects()
 		}
 	}
