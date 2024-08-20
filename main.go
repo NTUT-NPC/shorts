@@ -22,6 +22,8 @@ func main() {
 	readRedirects()
 	go watchRedirectsFile()
 
+	readStats()
+
 	http.HandleFunc("/", handleRedirect)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -68,12 +70,14 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	if url, ok := redirects.Permanent[slug]; ok {
 		log.Printf("Permanently redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
+		updateStat(slug)
 		return
 	}
 
 	if url, ok := redirects.Temporary[slug]; ok {
 		log.Printf("Temporary redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusFound)
+		updateStat(slug)
 		return
 	}
 

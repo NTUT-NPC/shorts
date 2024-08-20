@@ -51,6 +51,22 @@ Location: https://play.google.com/store/apps/details?id=club.ntut.npc.tat
 <a href="https://play.google.com/store/apps/details?id=club.ntut.npc.tat">Moved Permanently</a>.
 ```
 
+4. 查
+
+```json
+// config/stats.json
+{
+  "discord": {
+    "visitors": 1,
+    "last_visited": "2024-08-20T17:49:36.57603941+08:00"
+  },
+  "tat/android": {
+    "visitors": 1,
+    "last_visited": "2024-08-20T17:49:42.709932014+08:00"
+  }
+}
+```
+
 ## 架
 
 1. 做
