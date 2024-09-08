@@ -81,5 +81,12 @@ func handleRedirect(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.NotFound(w, r)
+	// Read and serve custom 404 page, fallback to default if not found
+	contents, err := os.ReadFile("config/404.html")
+	if err != nil {
+		contents, _ = os.ReadFile("assets/404.html")
+	}
+	w.WriteHeader(404)
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	w.Write(contents)
 }

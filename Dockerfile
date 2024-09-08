@@ -10,6 +10,7 @@ RUN go build -v
 
 FROM alpine AS production
 
+COPY assets assets
 COPY --from=build /usr/src/app/shorts .
 
 EXPOSE 8080
