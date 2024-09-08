@@ -78,9 +78,7 @@ Example content of `config/stats.json`:
 }
 ```
 
-## Test the Connection
-
-### Using `cURL`
+## Test the Connection with cURL
 
 ```sh
 curl http://localhost:8080/discord
@@ -89,7 +87,3 @@ curl http://localhost:8080/discord
 ```text
 <a href="https://discord.gg/9yYtgA4HXz">Found</a>.
 ```
-
-### Using `httpie`
-
-You can find tutorials [here](https://httpie.io/).
