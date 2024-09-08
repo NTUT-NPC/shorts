@@ -8,7 +8,7 @@
 
 ## Getting Started
 
-[中文 README](README_TW.md)
+[中文 README](README_ZH.md)
 
 ### Prerequisites
 
