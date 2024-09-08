@@ -17,16 +17,19 @@
 If you wish to build the Docker image yourself, follow these steps:
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/NTUT-NPC/shorts.git
     ```
 
 2. Navigate to the repository directory:
+
     ```sh
     cd shorts
     ```
 
 3. Build the Docker image:
+
     ```sh
     docker build -t shorts .
     ```
@@ -36,23 +39,27 @@ If you wish to build the Docker image yourself, follow these steps:
 If you prefer using the pre-built Docker image, you can pull it from the GitHub Container Registry:
 
 1. Pull the Docker image:
-    ```sh 
+
+    ```sh
     docker pull ghcr.io/ntut-npc/shorts:latest
     ```
 
 2. Create a directory for Docker Compose and configuration files:
+
     ```sh
     mkdir -p /srv/shorts-docker/config
     cd /srv/shorts-docker
     ```
 
 3. Create and edit the `compose.yaml` file:
+
     ```sh
     touch compose.yaml
     nano compose.yaml
     ```
 
 4. Add the following content to `compose.yaml`, then save and exit:
+
     ```yaml
     services:
       shorts:
@@ -65,6 +72,7 @@ If you prefer using the pre-built Docker image, you can pull it from the GitHub 
     ```
 
 5. Start the service:
+
     ```sh
     docker compose up -d
     ```
@@ -74,11 +82,13 @@ If you prefer using the pre-built Docker image, you can pull it from the GitHub 
 To set up URL redirects, modify the `config/redirects.toml` file:
 
 1. Open the configuration file:
+
     ```sh
     nano config/redirects.toml
     ```
 
 2. Add your redirects using the following format:
+
     ```toml
     # config/redirects.toml
 
@@ -104,11 +114,13 @@ To set up URL redirects, modify the `config/redirects.toml` file:
 To access statistics for your redirects, check the `config/stats.json` file:
 
 1. Open the statistics file:
+
     ```sh
     less config/stats.json
     ```
 
 2. Example content of `stats.json`:
+
     ```json
     {
       "discord": {
@@ -133,6 +145,7 @@ To verify that your URL shortener is working correctly, you can use the `httpie`
 First, install the `httpie` package. You can find the installation tutorial [here](https://httpie.io/).
 
 For example, on a RHEL-based system using `dnf`:
+
 ```sh
 sudo dnf install httpie
 ```
@@ -146,6 +159,7 @@ https to.ntut.club/discord
 ```
 
 The expected output should look like this:
+
 ```text
 HTTP/1.1 302 Found
 Alt-Svc: h3=":443"; ma=2592000
@@ -167,6 +181,7 @@ http :8080/tat/android
 ```
 
 The expected output should look like this:
+
 ```text
 HTTP/1.1 301 Moved Permanently
 Content-Length: 98
