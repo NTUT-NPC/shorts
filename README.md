@@ -7,20 +7,26 @@
 <p align="center">A lightweight URL shortener built using Go</p>
 
 ## Getting Started
+
 [中文 README](README_TW.md)
+
 ### Prerequisites
 
 1. **Docker**: Ensure Docker is installed on your system. If you need installation instructions, refer to the [Docker installation guide](https://docs.docker.com/engine/install/).
 
 ### Building (Optional)
+
 Please see [docs/building.md](docs/building.md)
 
 ### Install with docker-compose
+
 1. Create a directory for Docker Compose and configuration files:
+
     ```sh
     mkdir -p /srv/shorts-docker/config
     cd /srv/shorts-docker
     ```
+
 1. Edit `compose.yaml`:
 
     ```yaml
@@ -35,6 +41,7 @@ Please see [docs/building.md](docs/building.md)
     ```
 
 1. Start the service:
+
     ```sh
     docker compose up -d
     ```
@@ -44,6 +51,7 @@ Please see [docs/building.md](docs/building.md)
 To set up URL redirects, modify the `config/redirects.toml` file:
 
 1. Add your redirects using the following format:
+
     ```toml
     # config/redirects.toml
 
@@ -54,9 +62,11 @@ To set up URL redirects, modify the `config/redirects.toml` file:
     [permanent]
     "google" = "https://www.google.com"
     ```
+
    The URL format will be `http://<custom-domain>:<custom-port>/<custom-string>`.
 
 ## Viewing Statistics
+
 Example content of `config/stats.json`:
 
 ```json
@@ -69,13 +79,17 @@ Example content of `config/stats.json`:
 ```
 
 ## Test the Connection
+
 ### Using `cURL`
+
 ```sh
 curl http://localhost:8080/discord
 ```
-```
+
+```text
 <a href="https://discord.gg/9yYtgA4HXz">Found</a>.
 ```
 
 ### Using `httpie`
+
 You can find tutorials [here](https://httpie.io/).

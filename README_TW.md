@@ -12,12 +12,15 @@
 
 1. 確保 [Docker](https://docs.docker.com/engine/install/) 已安裝
 
-1. 建立目錄 
+1. 建立目錄
+
     ```sh
     mkdir -p /srv/shorts-docker/config
     cd /srv/shorts-docker
     ```
+
 1. 建立並編輯 `compose.yaml`
+
     ```yaml
     services:
       shorts:
@@ -30,6 +33,7 @@
     ```
 
 1. 啟動服務
+
     ```sh
     docker compose up -d
     ```
@@ -52,6 +56,7 @@
    短網址為：`http://<custom-domain>:<custom-port>/<custom-string>`
 
 ## 查看報告
+
 報告在 `config/stats.json`
 
 ```json
@@ -66,6 +71,7 @@
   }
 }
 ```
-    
+
 ## 測試
+
 直接使用瀏覽器測試
