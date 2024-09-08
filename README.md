@@ -81,9 +81,20 @@ Example content of `config/stats.json`:
 ## Test the Connection with cURL
 
 ```sh
-curl http://localhost:8080/discord
+curl -v localhost:8080/discord
 ```
 
 ```text
+> GET /discord HTTP/1.1
+> Host: localhost:8080
+> User-Agent: curl/8.9.1
+> Accept: */*
+> 
+< HTTP/1.1 302 Found
+< Content-Type: text/html; charset=utf-8
+< Location: https://discord.gg/9yYtgA4HXz
+< Date: Sun, 08 Sep 2024 14:28:11 GMT
+< Content-Length: 52
+< 
 <a href="https://discord.gg/9yYtgA4HXz">Found</a>.
 ```
