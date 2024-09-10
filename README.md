@@ -6,90 +6,35 @@
 
 <p align="center">A lightweight URL shortener built using Go</p>
 
-## Getting Started
-
 [中文 README](README_ZH.md)
 
-### Prerequisites
+## Features
 
-1. **Docker**: Ensure Docker is installed on your system. If you need installation instructions, refer to the [Docker installation guide](https://docs.docker.com/engine/install/).
+### Hot-Reloading Configuration
 
-### Building (Optional)
+Edit the `config/redirects.toml` file and Shorts will automatically reload the configuration.
 
-Please see [docs/building.md](docs/building.md)
+```toml
+# config/redirects.toml
 
-### Install with docker-compose
+[temporary]
+"discord" = "https://discord.gg/9yYtgA4HXz"
 
-1. Create a directory for Docker Compose and configuration files:
-
-    ```sh
-    mkdir -p /srv/shorts-docker/config
-    cd /srv/shorts-docker
-    ```
-
-1. Edit `compose.yaml`:
-
-    ```yaml
-    services:
-      shorts:
-        image: ghcr.io/ntut-npc/shorts:latest
-        container_name: shorts-docker
-        ports:
-          - "<custom-port>:8080"
-        volumes:
-          - ./config:/config
-    ```
-
-1. Start the service:
-
-    ```sh
-    docker compose up -d
-    ```
-
-## Configuration
-
-To set up URL redirects, modify the `config/redirects.toml` file:
-
-1. Add your redirects using the following format:
-
-    ```toml
-    # config/redirects.toml
-
-    [temporary]
-    "discord" = "https://discord.gg/9yYtgA4HXz"
-    "<custom-string>" = "<url>"
-
-    [permanent]
-    "google" = "https://www.google.com"
-    ```
-
-   The URL format will be `http://<custom-domain>:<custom-port>/<custom-string>`.
-
-## Viewing Statistics
-
-Example content of `config/stats.json`:
-
-```json
-{
-  "discord": {
-    "visitors": 1,
-    "last_visited": "2024-08-20T17:49:36.57603941+08:00"
-  }
-}
+[permanent]
+"google" = "https://www.google.com"
 ```
 
-## Test the Connection with cURL
+### Temporary and Permanent Redirects
+
+Add experimental redirects as temporary redirects (307) and change them to permanent redirects (301) for faster redirection.
+
+With the above configuration:
 
 ```sh
 curl -v localhost:8080/discord
 ```
 
 ```text
-> GET /discord HTTP/1.1
-> Host: localhost:8080
-> User-Agent: curl/8.9.1
-> Accept: */*
-> 
 < HTTP/1.1 302 Found
 < Content-Type: text/html; charset=utf-8
 < Location: https://discord.gg/9yYtgA4HXz
@@ -98,3 +43,81 @@ curl -v localhost:8080/discord
 < 
 <a href="https://discord.gg/9yYtgA4HXz">Found</a>.
 ```
+
+```sh
+curl -v localhost:8080/google
+```
+
+```text
+< HTTP/1.1 301 Moved Permanently
+< Content-Type: text/html; charset=utf-8
+< Location: https://www.google.com
+< Date: Mon, 09 Sep 2024 08:38:22 GMT
+< Content-Length: 57
+< 
+<a href="https://www.google.com">Moved Permanently</a>.
+```
+
+### Viewing Statistics
+
+Shorts records the number of visitors and the last visited time for each redirect in `config/stats.json`.
+
+```json
+{
+  "discord": {
+    "visitors": 1,
+    "last_visited": "2024-09-08T22:28:11.894270007+08:00"
+  },
+  "google": {
+    "visitors": 1,
+    "last_visited": "2024-09-09T16:38:22.113075596+08:00"
+  }
+}
+```
+
+## Deployment
+
+We recommend deploying Shorts using Docker.
+
+### Docker
+
+```sh
+docker run -d -p 8080:8080 \
+  -v $PWD/config:/config \
+  ghcr.io/ntut-npc/shorts
+```
+
+### Docker Compose
+
+See [docs/compose.yaml](docs/compose.yaml) for an example Docker Compose configuration.
+
+## Development
+
+To set up Shorts for local development:
+
+1. Clone the repository:
+
+    ```sh
+    git clone https://github.com/ntut-npc/shorts.git
+    cd shorts
+    ```
+
+2. Install dependencies:
+
+    ```sh
+    go mod download
+    ```
+
+3. Run the application:
+
+    ```sh
+    go run .
+    ```
+
+The server will start on `http://localhost:8080`.
+
+### Hot Reloading During Development
+
+For a better development experience, we recommend using [gow](https://github.com/mitranim/gow), which automatically restarts the application when source files change.
+
+Remember to create and configure your `config/redirects.toml` file as described in the Configuration section to set up your redirects.
