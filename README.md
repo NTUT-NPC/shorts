@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/shorts.png" alt="Shorts Logo" align="center" width="100" height="100">
+  <img src="docs/shorts.svg" alt="Shorts Logo" align="center" width="128" height="128">
 </p>
 
 <h1 align="center">短褲 Shorts</h1>
