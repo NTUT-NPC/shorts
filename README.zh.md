@@ -4,15 +4,13 @@
 
 <h1 align="center">短褲 Shorts</h1>
 
-<p align="center">A lightweight URL shortener built with Go</p>
+<p align="center">一個使用 Go 語言製作的輕量短網址服務</p>
 
-<p align="center"><a href="README.zh.md">中文版本</a></p>
+## 功能
 
-## Features
+### 即時重新載入設定
 
-### Hot-Reloading Configuration
-
-Edit the `config/redirects.toml` file and Shorts will automatically reload the configuration.
+編輯 `config/redirects.toml` 文件，Shorts 會自動重新載入設定。
 
 ```toml
 # config/redirects.toml
@@ -24,11 +22,11 @@ Edit the `config/redirects.toml` file and Shorts will automatically reload the c
 "google" = "https://www.google.com"
 ```
 
-### Temporary and Permanent Redirects
+### 臨時和永久重新導向
 
-Add experimental redirects as temporary redirects (307) and change them to permanent redirects (301) for faster redirection.
+可以將實驗性的連結添加為臨時重新導向（307），然後將它們改成永久重新導向（301）以加快重新導向速度。
 
-With the above configuration:
+基於上述設定：
 
 ```sh
 curl -v localhost:8080/discord
@@ -58,9 +56,9 @@ curl -v localhost:8080/google
 <a href="https://www.google.com">Moved Permanently</a>.
 ```
 
-### Viewing Statistics
+### 查看統計數據
 
-Shorts records the number of visitors and the last visited time for each redirect in `config/stats.json`.
+Shorts 會在 `config/stats.json` 中記錄每個重新導向的訪問者數量和最後訪問時間。
 
 ```json
 {
@@ -75,9 +73,9 @@ Shorts records the number of visitors and the last visited time for each redirec
 }
 ```
 
-## Deployment
+## 部署
 
-We recommend deploying Shorts using Docker.
+我們建議使用 Docker 部署 Shorts。
 
 ### Docker
 
@@ -89,35 +87,35 @@ docker run -d -p 8080:8080 \
 
 ### Docker Compose
 
-See [docs/compose.yaml](docs/compose.yaml) for an example Docker Compose configuration.
+參見位於 [docs/compose.yaml](docs/compose.yaml) 的配置範例。
 
-## Development
+## 開發
 
-To set up Shorts for local development:
+本地開發 Shorts 的步驟：
 
-1. Clone the repository:
+1. 再製這個倉庫：
 
     ```sh
     git clone https://github.com/ntut-npc/shorts.git
     cd shorts
     ```
 
-2. Install dependencies:
+2. 安裝依賴：
 
     ```sh
     go mod download
     ```
 
-3. Run the application:
+3. 執行應用程式：
 
     ```sh
     go run .
     ```
 
-The server will start on `http://localhost:8080`.
+伺服器會在 `http://localhost:8080` 啟動。
 
-### Hot Reloading During Development
+### 開發期間的即時重新載入
 
-For a better development experience, we recommend using [gow](https://github.com/mitranim/gow), which automatically restarts the application when source files change.
+為了獲得更好的開發體驗，我們推薦使用 [gow](https://github.com/mitranim/gow)，它會在原始碼更改時自動重啟程式。
 
-Remember to create and configure your `config/redirects.toml` file as described in the [Hot-Reloading Configuration](#hot-reloading-configuration) section to set up your redirects.
+記得根據[即時重新載入設定](#即時重新載入設定)部分建立並編輯你的 `config/redirects.toml` 文件來設定重新導向。
