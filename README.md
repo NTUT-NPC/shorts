@@ -131,3 +131,26 @@ The server will start on `http://localhost:8080`.
 For a better development experience, we recommend using [gow](https://github.com/mitranim/gow), which automatically restarts the application when source files change.
 
 Remember to create and configure your `config/redirects.toml` file as described in the [Hot-Reloading Configuration](#hot-reloading-configuration) section to set up your redirects.
+
+## API
+
+Shorts provides a simple API to manage redirects. You can use the following endpoints to create and update redirect configurations.
+
+### Create or Update a Redirect
+
+To create or update a redirect, use the following `POST` request:
+
+```sh
+curl -X POST http://<server_ip>:8080/api \
+  -d '{"slug":"temporary", "key":"discord", "value":"https://discord.gg/xxx", "overwrite": true}' \
+  -H "Content-Type: application/json"
+```
+
+**Parameters:**
+
+- `"slug"`: The type of redirect, can be either `"temporary"` or `"permanent"`.
+- `"key"`: The key for the redirect (e.g., `"discord"`, `"google"`).
+- `"value"`: The URL to redirect to.
+- `"overwrite"`: A boolean (`true` or `false`) indicating whether to overwrite an existing redirect with the same key.
+
+For security, it is recommended that you implement your own authentication mechanism for API requests. 
