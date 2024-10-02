@@ -15,14 +15,14 @@ templ Index() {
 		<body>
 			<h1>Send POST Request</h1>
 			<form id="dataForm">
-				<label for="section">Section:</label>
-				<input type="text" id="section" name="section" required/>
-				<label for="key">Key:</label>
-				<input type="text" id="key" name="key" required/>
-				<label for="value">Value:</label>
-				<input type="url" id="value" name="value" required/>
+		<label for="type">Type:</label>
+		<input type="text" id="type" name="type" required />
+		<label for="slug">Slug:</label>
+		<input type="text" id="slug" name="slug" required />
+		<label for="url">URL:</label>
+		<input type="url" id="url" name="url" required />
 				<label for="overwrite">Overwrite:</label>
-				<input type="checkbox" id="overwrite" name="overwrite"/>
+		<input type="checkbox" id="overwrite" name="overwrite" />
 				<button type="submit">Send Request</button>
 			</form>
 			<script>
