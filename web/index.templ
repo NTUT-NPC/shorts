@@ -1,49 +1,46 @@
 package web
 
-import "os"
-
-var serverUrl = os.Getenv("HOST")
-
 templ Index() {
-	<!DOCTYPE html>
-	<html lang="en">
-		<head>
-			<meta charset="UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-			<title>Shorts</title>
-		</head>
-		<body>
-			<h1>Send POST Request</h1>
-			<form id="dataForm">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Shorts</title>
+</head>
+
+<body>
+	<h1>Send POST Request</h1>
+	<form id="dataForm">
 		<label for="type">Type:</label>
 		<input type="text" id="type" name="type" required />
 		<label for="slug">Slug:</label>
 		<input type="text" id="slug" name="slug" required />
 		<label for="url">URL:</label>
 		<input type="url" id="url" name="url" required />
-				<label for="overwrite">Overwrite:</label>
+		<label for="overwrite">Overwrite:</label>
 		<input type="checkbox" id="overwrite" name="overwrite" />
-				<button type="submit">Send Request</button>
-			</form>
-			<script>
-        document.getElementById('dataForm').onsubmit = function(event) {
-            event.preventDefault();
-            
-            const body = {
-              slug = document.getElementById('slug').value,
-              key = document.getElementById('key').value,
-              value = document.getElementById('value').value,
-              overwrite = document.getElementById('overwrite').checked
-            }
+		<button type="submit">Send Request</button>
+	</form>
 
-            fetch({ serverUrl }, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body)
-            })
-            .catch(error => console.error('Error:', error));
-        };
-    </script>
-		</body>
-	</html>
+	<script>
+		document.getElementById('dataForm').addEventListener('submit', function(event) {
+			event.preventDefault();
+
+			const body = {
+				slug: document.getElementById('slug').value,
+				key: document.getElementById('key').value,
+				value: document.getElementById('value').value,
+				overwrite: document.getElementById('overwrite').checked
+			}
+
+			fetch('/api', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(body)
+			}).catch(console.error)
+		})
+	</script>
+</body>
+</html>
 }
