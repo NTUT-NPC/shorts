@@ -5,21 +5,22 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/NTUT-NPC/shorts"
+	"github.com/NTUT-NPC/shorts/web"
+	"github.com/a-h/templ"
 	"github.com/fsnotify/fsnotify"
 )
 
-var redirects Redirects
-
-const redirectsFile = "config/redirects.toml"
-
 func main() {
-	readRedirects()
+	shorts.ReadRedirects()
 	go watchRedirectsFile()
 
-	readStats()
+	shorts.ReadStats()
 
 	http.HandleFunc("/", handleRedirect)
-	http.HandleFunc("/api", editConfigHandler)
+	http.HandleFunc("/api", shorts.EditConfigHandler)
+	http.Handle("/web", templ.Handler(web.Index()))
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
@@ -39,8 +40,8 @@ func watchRedirectsFile() {
 
 	// Watch for events
 	for event := range watcher.Events {
-		if event.Has(fsnotify.Write) && event.Name == redirectsFile {
-			go readRedirects()
+		if event.Has(fsnotify.Write) && event.Name == shorts.RedirectsFile {
+			go shorts.ReadRedirects()
 		}
 	}
 }
@@ -48,17 +49,17 @@ func watchRedirectsFile() {
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	slug := r.URL.Path[1:] // Remove the leading slash
 
-	if url, ok := redirects.Permanent[slug]; ok {
+	if url, ok := shorts.Redirects.Permanent[slug]; ok {
 		log.Printf("Permanently redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
-		updateStat(slug)
+		shorts.UpdateStat(slug)
 		return
 	}
 
-	if url, ok := redirects.Temporary[slug]; ok {
+	if url, ok := shorts.Redirects.Temporary[slug]; ok {
 		log.Printf("Temporary redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusFound)
-		updateStat(slug)
+		shorts.UpdateStat(slug)
 		return
 	}
 

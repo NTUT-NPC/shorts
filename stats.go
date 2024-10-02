@@ -1,4 +1,4 @@
-package main
+package shorts
 
 import (
 	"encoding/json"
@@ -22,7 +22,7 @@ var (
 
 const statsFile = "config/stats.json"
 
-func updateStat(slug string) {
+func UpdateStat(slug string) {
 	statsMutex.Lock()
 	defer statsMutex.Unlock()
 
@@ -40,7 +40,7 @@ func updateStat(slug string) {
 	writeStats()
 }
 
-func readStats() {
+func ReadStats() {
 	file, err := os.ReadFile(statsFile)
 	if err != nil {
 		log.Println("No stats file found, starting with an empty stats map")

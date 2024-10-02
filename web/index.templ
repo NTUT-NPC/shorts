@@ -1,0 +1,49 @@
+package web
+
+import "os"
+
+var serverUrl = os.Getenv("HOST")
+
+templ Index() {
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Shorts</title>
+		</head>
+		<body>
+			<h1>Send POST Request</h1>
+			<form id="dataForm">
+				<label for="section">Section:</label>
+				<input type="text" id="section" name="section" required/>
+				<label for="key">Key:</label>
+				<input type="text" id="key" name="key" required/>
+				<label for="value">Value:</label>
+				<input type="url" id="value" name="value" required/>
+				<label for="overwrite">Overwrite:</label>
+				<input type="checkbox" id="overwrite" name="overwrite"/>
+				<button type="submit">Send Request</button>
+			</form>
+			<script>
+        document.getElementById('dataForm').onsubmit = function(event) {
+            event.preventDefault();
+            
+            const body = {
+              slug = document.getElementById('slug').value,
+              key = document.getElementById('key').value,
+              value = document.getElementById('value').value,
+              overwrite = document.getElementById('overwrite').checked
+            }
+
+            fetch({ serverUrl }, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            })
+            .catch(error => console.error('Error:', error));
+        };
+    </script>
+		</body>
+	</html>
+}

@@ -1,21 +1,18 @@
-package main
+package shorts
 
 import (
 	"encoding/json"
 	"net/http"
-	"os"
-
-	"github.com/pelletier/go-toml/v2"
 )
 
 type UpdateRequest struct {
-	Section   string `json:"section"`
+	Slug      string `json:"slug"`
 	Key       string `json:"key"`
 	Value     string `json:"value"`
 	Overwrite bool   `json:"overwrite"`
 }
 
-func editConfigHandler(w http.ResponseWriter, r *http.Request) {
+func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -29,39 +26,29 @@ func editConfigHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&updateReq)
 	if err != nil {
-		http.Error(w, "Error: Bad Request", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	switch updateReq.Section {
+	switch updateReq.Slug {
 	case "temporary":
-		_, keyExists := redirects.Temporary[updateReq.Key]
+		_, keyExists := Redirects.Temporary[updateReq.Key]
 		if updateReq.Overwrite || !keyExists {
-			redirects.Temporary[updateReq.Key] = updateReq.Value
+			Redirects.Temporary[updateReq.Key] = updateReq.Value
 		}
 	case "permanent":
-		_, keyExists := redirects.Permanent[updateReq.Key]
+		_, keyExists := Redirects.Permanent[updateReq.Key]
 		if updateReq.Overwrite || !keyExists {
-			redirects.Permanent[updateReq.Key] = updateReq.Value
+			Redirects.Permanent[updateReq.Key] = updateReq.Value
 		}
 	default:
 		http.Error(w, "Invalid section", http.StatusBadRequest)
 		return
 	}
 
-	file, err := os.Create(redirectsFile)
+	err = WriteRedirects()
 	if err != nil {
-		http.Error(w, "Error writing config file", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	defer file.Close()
-
-	err = toml.NewEncoder(file).Encode(redirects)
-	if err != nil {
-		http.Error(w, "Error encoding config file", http.StatusInternalServerError)
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Config updated successfully\n"))
 }
