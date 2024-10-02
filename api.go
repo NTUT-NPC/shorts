@@ -6,10 +6,10 @@ import (
 )
 
 type UpdateRequest struct {
-	Slug      string `json:"slug"`
-	Key       string `json:"key"`
-	Value     string `json:"value"`
-	Overwrite bool   `json:"overwrite"`
+	Type      string
+	Slug      string
+	Url       string
+	Overwrite bool
 }
 
 func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
@@ -30,16 +30,16 @@ func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	switch updateReq.Slug {
+	switch updateReq.Type {
 	case "temporary":
-		_, keyExists := Redirects.Temporary[updateReq.Key]
+		_, keyExists := Redirects.Temporary[updateReq.Slug]
 		if updateReq.Overwrite || !keyExists {
-			Redirects.Temporary[updateReq.Key] = updateReq.Value
+			Redirects.Temporary[updateReq.Slug] = updateReq.Url
 		}
 	case "permanent":
-		_, keyExists := Redirects.Permanent[updateReq.Key]
+		_, keyExists := Redirects.Permanent[updateReq.Slug]
 		if updateReq.Overwrite || !keyExists {
-			Redirects.Permanent[updateReq.Key] = updateReq.Value
+			Redirects.Permanent[updateReq.Slug] = updateReq.Url
 		}
 	default:
 		http.Error(w, "Invalid section", http.StatusBadRequest)
