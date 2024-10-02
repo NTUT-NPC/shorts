@@ -5,14 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/BurntSushi/toml"
 	"github.com/fsnotify/fsnotify"
 )
-
-type Redirects struct {
-	Temporary map[string]string
-	Permanent map[string]string
-}
 
 var redirects Redirects
 
@@ -25,21 +19,8 @@ func main() {
 	readStats()
 
 	http.HandleFunc("/", handleRedirect)
+	http.HandleFunc("/api", editConfigHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func readRedirects() {
-	file, err := os.ReadFile(redirectsFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = toml.Unmarshal([]byte(file), &redirects)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Loaded %d temporary and %d permanent redirects", len(redirects.Temporary), len(redirects.Permanent))
 }
 
 func watchRedirectsFile() {
