@@ -1,46 +1,44 @@
 package web
 
 templ Index() {
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Shorts</title>
-</head>
+	<!DOCTYPE html>
+	<html lang="en">
+		<head>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<title>Shorts</title>
+		</head>
+		<body>
+			<h1>Send POST Request</h1>
+			<form id="dataForm">
+				<label for="type">Type:</label>
+				<input type="text" id="type" name="type" required/>
+				<label for="slug">Slug:</label>
+				<input type="text" id="slug" name="slug" required/>
+				<label for="url">URL:</label>
+				<input type="url" id="url" name="url" required/>
+				<label for="overwrite">Overwrite:</label>
+				<input type="checkbox" id="overwrite" name="overwrite"/>
+				<button type="submit">Send Request</button>
+			</form>
+			<script>
+				document.getElementById('dataForm').addEventListener('submit', function (event) {
+					event.preventDefault();
 
-<body>
-	<h1>Send POST Request</h1>
-	<form id="dataForm">
-		<label for="type">Type:</label>
-		<input type="text" id="type" name="type" required />
-		<label for="slug">Slug:</label>
-		<input type="text" id="slug" name="slug" required />
-		<label for="url">URL:</label>
-		<input type="url" id="url" name="url" required />
-		<label for="overwrite">Overwrite:</label>
-		<input type="checkbox" id="overwrite" name="overwrite" />
-		<button type="submit">Send Request</button>
-	</form>
+					const body = {
+						slug: document.getElementById('slug').value,
+						key: document.getElementById('key').value,
+						value: document.getElementById('value').value,
+						overwrite: document.getElementById('overwrite').checked
+					}
 
-	<script>
-		document.getElementById('dataForm').addEventListener('submit', function(event) {
-			event.preventDefault();
-
-			const body = {
-				slug: document.getElementById('slug').value,
-				key: document.getElementById('key').value,
-				value: document.getElementById('value').value,
-				overwrite: document.getElementById('overwrite').checked
-			}
-
-			fetch('/api', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(body)
-			}).catch(console.error)
-		})
-	</script>
-</body>
-</html>
+					fetch('/api', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify(body)
+					}).catch(console.error)
+				})
+			</script>
+		</body>
+	</html>
 }
