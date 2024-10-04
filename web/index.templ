@@ -26,9 +26,9 @@ templ Index() {
 					event.preventDefault();
 
 					const body = {
+						type: document.getElementById('type').value,
 						slug: document.getElementById('slug').value,
-						key: document.getElementById('key').value,
-						value: document.getElementById('value').value,
+						url: document.getElementById('url').value,
 						overwrite: document.getElementById('overwrite').checked
 					}
 
