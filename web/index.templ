@@ -12,7 +12,10 @@ templ Index() {
 			<h1>Send POST Request</h1>
 			<form id="dataForm">
 				<label for="type">Type:</label>
-				<input type="text" id="type" name="type" required/>
+				<select id="type" name="type" required>
+					<option value="temporary">Temporary</option>
+					<option value="permanent">Permanent</option>
+				</select>
 				<label for="slug">Slug:</label>
 				<input type="text" id="slug" name="slug" required/>
 				<label for="url">URL:</label>
