@@ -103,7 +103,7 @@ docker run -d -p 8080:8080 \
 2. 執行開發腳本：
 
     ```sh
-    scripts/dev
+    scripts/dev.sh
     ```
 
 伺服器會在 `http://localhost:8080` 啟動。記得根據[即時重新載入設定](#即時重新載入設定)部分建立並編輯你的 `config/redirects.toml` 文件來設定重新導向。

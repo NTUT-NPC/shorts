@@ -115,7 +115,7 @@ To set up Shorts for local development:
 2. Run the dev script:
 
     ```sh
-    scripts/dev
+    scripts/dev.sh
     ```
 
 The server will start on `http://localhost:8080`. Remember to create and configure your `config/redirects.toml` file as described in the [Hot-Reloading Configuration](#hot-reloading-configuration) section to set up your redirects.
