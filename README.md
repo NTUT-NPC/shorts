@@ -112,22 +112,10 @@ To set up Shorts for local development:
     cd shorts
     ```
 
-2. Install dependencies:
+2. Run the dev script:
 
     ```sh
-    go mod download
+    scripts/dev
     ```
 
-3. Run the application:
-
-    ```sh
-    go run .
-    ```
-
-The server will start on `http://localhost:8080`.
-
-### Hot Reloading During Development
-
-For a better development experience, we recommend using [gow](https://github.com/mitranim/gow), which automatically restarts the application when source files change.
-
-Remember to create and configure your `config/redirects.toml` file as described in the [Hot-Reloading Configuration](#hot-reloading-configuration) section to set up your redirects.
+The server will start on `http://localhost:8080`. Remember to create and configure your `config/redirects.toml` file as described in the [Hot-Reloading Configuration](#hot-reloading-configuration) section to set up your redirects.

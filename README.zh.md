@@ -100,22 +100,10 @@ docker run -d -p 8080:8080 \
     cd shorts
     ```
 
-2. 安裝依賴：
+2. 執行開發腳本：
 
     ```sh
-    go mod download
+    scripts/dev
     ```
 
-3. 執行應用程式：
-
-    ```sh
-    go run .
-    ```
-
-伺服器會在 `http://localhost:8080` 啟動。
-
-### 開發期間的即時重新載入
-
-為了獲得更好的開發體驗，我們推薦使用 [gow](https://github.com/mitranim/gow)，它會在原始碼更改時自動重啟程式。
-
-記得根據[即時重新載入設定](#即時重新載入設定)部分建立並編輯你的 `config/redirects.toml` 文件來設定重新導向。
+伺服器會在 `http://localhost:8080` 啟動。記得根據[即時重新載入設定](#即時重新載入設定)部分建立並編輯你的 `config/redirects.toml` 文件來設定重新導向。
