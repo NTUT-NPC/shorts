@@ -2,6 +2,7 @@ package shorts
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 
@@ -34,7 +35,7 @@ func ReadRedirects() {
 func WriteRedirects() error {
 	file, err := os.Create(RedirectsFile)
 	if err != nil {
-		return errors.New("unable to create redirects.toml")
+		return fmt.Errorf("unable to create redirects.toml: %w", err)
 	}
 	defer file.Close()
 
