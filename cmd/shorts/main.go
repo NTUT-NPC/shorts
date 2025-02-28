@@ -5,41 +5,21 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/BurntSushi/toml"
+	"github.com/NTUT-NPC/shorts"
 	"github.com/fsnotify/fsnotify"
 )
 
-type Redirects struct {
-	Temporary map[string]string
-	Permanent map[string]string
-}
-
-var redirects Redirects
-
-const redirectsFile = "config/redirects.toml"
-
 func main() {
-	readRedirects()
+	shorts.ReadRedirects()
 	go watchRedirectsFile()
 
-	readStats()
+	shorts.ReadStats()
 
 	http.HandleFunc("/", handleRedirect)
+	// http.HandleFunc("/api/edit", shorts.EditConfigHandler)
+	http.HandleFunc("/api/try", shorts.TryRedirectHandler)
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func readRedirects() {
-	file, err := os.ReadFile(redirectsFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	err = toml.Unmarshal([]byte(file), &redirects)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Printf("Loaded %d temporary and %d permanent redirects", len(redirects.Temporary), len(redirects.Permanent))
 }
 
 func watchRedirectsFile() {
@@ -58,8 +38,8 @@ func watchRedirectsFile() {
 
 	// Watch for events
 	for event := range watcher.Events {
-		if event.Has(fsnotify.Write) && event.Name == redirectsFile {
-			go readRedirects()
+		if event.Has(fsnotify.Write) && event.Name == shorts.RedirectsFile {
+			go shorts.ReadRedirects()
 		}
 	}
 }
@@ -67,17 +47,17 @@ func watchRedirectsFile() {
 func handleRedirect(w http.ResponseWriter, r *http.Request) {
 	slug := r.URL.Path[1:] // Remove the leading slash
 
-	if url, ok := redirects.Permanent[slug]; ok {
+	if url, ok := shorts.Redirects.Permanent[slug]; ok {
 		log.Printf("Permanently redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
-		updateStat(slug)
+		shorts.UpdateStat(slug)
 		return
 	}
 
-	if url, ok := redirects.Temporary[slug]; ok {
+	if url, ok := shorts.Redirects.Temporary[slug]; ok {
 		log.Printf("Temporary redirecting %s", slug)
 		http.Redirect(w, r, url, http.StatusFound)
-		updateStat(slug)
+		shorts.UpdateStat(slug)
 		return
 	}
 
