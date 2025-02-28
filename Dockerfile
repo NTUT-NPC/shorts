@@ -5,8 +5,8 @@ WORKDIR /usr/src/app
 COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
-COPY *.go .
-RUN go build -v
+COPY . .
+RUN go build -v ./cmd/shorts
 
 FROM alpine AS production
 

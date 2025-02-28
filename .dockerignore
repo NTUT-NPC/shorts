@@ -1,0 +1,6 @@
+.git/
+.github/
+docs/
+scripts/
+config/
+*.md
