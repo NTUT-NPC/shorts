@@ -56,7 +56,7 @@ func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // TryRedirectHandler handles the /api/try endpoint which attempts to redirect to a slug
-// and falls back to a catch path if the slug is not found
+// and falls back to a fallback path if the slug is not found
 func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
@@ -67,9 +67,9 @@ func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	catch := r.URL.Query().Get("catch")
-	if catch == "" {
-		http.Error(w, "Missing required parameter: catch", http.StatusBadRequest)
+	fallback := r.URL.Query().Get("fallback")
+	if fallback == "" {
+		http.Error(w, "Missing required parameter: fallback", http.StatusBadRequest)
 		return
 	}
 
@@ -91,6 +91,6 @@ func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	if r.TLS != nil {
 		scheme = "https"
 	}
-	fallbackURL := scheme + "://" + r.Host + "/" + catch
+	fallbackURL := scheme + "://" + r.Host + "/" + fallback
 	http.Redirect(w, r, fallbackURL, http.StatusFound)
 }
