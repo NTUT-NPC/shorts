@@ -16,7 +16,7 @@ func main() {
 	shorts.ReadStats()
 
 	http.HandleFunc("/", handleRedirect)
-	http.HandleFunc("/api/edit", shorts.EditConfigHandler)
+	// http.HandleFunc("/api/edit", shorts.EditConfigHandler)
 	http.HandleFunc("/api/try", shorts.TryRedirectHandler)
 
 	log.Fatal(http.ListenAndServe(":8080", nil))
