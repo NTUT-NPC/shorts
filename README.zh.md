@@ -73,6 +73,42 @@ Shorts 會在 `config/stats.json` 中記錄每個重新導向的訪問者數量�
 }
 ```
 
+### API 功能
+
+#### 嘗試重新導向 API
+
+`/api/try` 端點允許您嘗試重新導向到某個 slug，如果 slug 不存在，則會重新導向到指定的備用路徑。此 API 需要兩個參數：`slug`（嘗試重新導向的目標）和 `fallback`（當 slug 不存在時重新導向的路徑）。
+
+```sh
+curl -v "localhost:8080/api/try?slug=discord&fallback=not-found"
+```
+
+```text
+< HTTP/1.1 302 Found
+< Content-Type: text/html; charset=utf-8
+< Location: https://discord.gg/9yYtgA4HXz
+< Date: Sun, 10 Sep 2024 15:30:22 GMT
+< Content-Length: 52
+< 
+<a href="https://discord.gg/9yYtgA4HXz">Found</a>.
+```
+
+如果 slug 不存在，將會重新導向到同一域名上的備用路徑：
+
+```sh
+curl -v "localhost:8080/api/try?slug=nonexistent&fallback=not-found"
+```
+
+```text
+< HTTP/1.1 302 Found
+< Content-Type: text/html; charset=utf-8
+< Location: http://localhost:8080/not-found
+< Date: Sun, 10 Sep 2024 15:31:45 GMT
+< Content-Length: 56
+< 
+<a href="http://localhost:8080/not-found">Found</a>.
+```
+
 ## 部署
 
 我們建議使用 Docker 部署 Shorts。

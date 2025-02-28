@@ -85,6 +85,42 @@ Shorts records the number of visitors and the last visited time for each redirec
 }
 ```
 
+### API Features
+
+#### Try Redirect API
+
+The `/api/try` endpoint allows you to attempt to redirect to a slug and fall back to a specified path if the slug is not found. This API requires two parameters: `slug` (the redirect to try) and `fallback` (the path to redirect to if the slug doesn't exist).
+
+```sh
+curl -v "localhost:8080/api/try?slug=discord&fallback=not-found"
+```
+
+```text
+< HTTP/1.1 302 Found
+< Content-Type: text/html; charset=utf-8
+< Location: https://discord.gg/9yYtgA4HXz
+< Date: Sun, 10 Sep 2024 15:30:22 GMT
+< Content-Length: 52
+< 
+<a href="https://discord.gg/9yYtgA4HXz">Found</a>.
+```
+
+If the slug doesn't exist, it will redirect to the fallback path on the same domain:
+
+```sh
+curl -v "localhost:8080/api/try?slug=nonexistent&fallback=not-found"
+```
+
+```text
+< HTTP/1.1 302 Found
+< Content-Type: text/html; charset=utf-8
+< Location: http://localhost:8080/not-found
+< Date: Sun, 10 Sep 2024 15:31:45 GMT
+< Content-Length: 56
+< 
+<a href="http://localhost:8080/not-found">Found</a>.
+```
+
 ## Deployment
 
 We recommend deploying Shorts using Docker.
