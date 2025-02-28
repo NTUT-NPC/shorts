@@ -60,7 +60,8 @@ func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
 // and falls back to a fallback path if the slug is not found
 func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 	slug := r.URL.Query().Get("slug")
 	if slug == "" {
