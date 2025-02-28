@@ -77,7 +77,7 @@ Shorts 會在 `config/stats.json` 中記錄每個重新導向的訪問者數量�
 
 #### 嘗試重新導向 API
 
-`/api/try` 端點允許您嘗試重新導向到某個 slug，如果 slug 不存在，則會重新導向到指定的備用路徑。此 API 需要兩個參數：`slug`（嘗試重新導向的目標）和 `fallback`（當 slug 不存在時重新導向的路徑）。
+`/api/try` 端點允許您嘗試重新導向到某個 slug，如果 slug 不存在，則會重新導向到指定的備用 URL。此 API 需要兩個參數：`slug`（嘗試重新導向的目標）和 `fallback`（當 slug 不存在時重新導向的完整 URL）。
 
 ```sh
 curl -v "localhost:8080/api/try?slug=discord&fallback=not-found"

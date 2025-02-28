@@ -89,7 +89,7 @@ Shorts records the number of visitors and the last visited time for each redirec
 
 #### Try Redirect API
 
-The `/api/try` endpoint allows you to attempt to redirect to a slug and fall back to a specified path if the slug is not found. This API requires two parameters: `slug` (the redirect to try) and `fallback` (the path to redirect to if the slug doesn't exist).
+The `/api/try` endpoint allows you to attempt to redirect to a slug and fall back to a specified URL if the slug is not found. This API requires two parameters: `slug` (the redirect to try) and `fallback` (a complete URL to redirect to if the slug doesn't exist).
 
 ```sh
 curl -v "localhost:8080/api/try?slug=discord&fallback=not-found"

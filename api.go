@@ -3,6 +3,7 @@ package shorts
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 )
 
 type UpdateRequest struct {
@@ -73,6 +74,13 @@ func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Validate URL is in correct format
+	fallbackURL, err := url.Parse(fallback)
+	if err != nil || fallbackURL.Scheme == "" || fallbackURL.Host == "" {
+		http.Error(w, "Invalid fallback URL format", http.StatusBadRequest)
+		return
+	}
+
 	// Check if slug exists in redirects map
 	if url, ok := Redirects.Permanent[slug]; ok {
 		http.Redirect(w, r, url, http.StatusMovedPermanently)
@@ -86,11 +94,6 @@ func TryRedirectHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Slug not found, redirect to the fallback URL
-	scheme := "http"
-	if r.TLS != nil {
-		scheme = "https"
-	}
-	fallbackURL := scheme + "://" + r.Host + "/" + fallback
-	http.Redirect(w, r, fallbackURL, http.StatusFound)
+	// Slug not found, redirect to the provided fallback URL
+	http.Redirect(w, r, fallback, http.StatusFound)
 }
