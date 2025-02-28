@@ -8,7 +8,7 @@ import (
 type UpdateRequest struct {
 	Type      string
 	Slug      string
-	Url       string
+	URL       string
 	Overwrite bool
 }
 
@@ -36,12 +36,12 @@ func EditConfigHandler(w http.ResponseWriter, r *http.Request) {
 	case "temporary":
 		_, keyExists := Redirects.Temporary[updateReq.Slug]
 		if updateReq.Overwrite || !keyExists {
-			Redirects.Temporary[updateReq.Slug] = updateReq.Url
+			Redirects.Temporary[updateReq.Slug] = updateReq.URL
 		}
 	case "permanent":
 		_, keyExists := Redirects.Permanent[updateReq.Slug]
 		if updateReq.Overwrite || !keyExists {
-			Redirects.Permanent[updateReq.Slug] = updateReq.Url
+			Redirects.Permanent[updateReq.Slug] = updateReq.URL
 		}
 	default:
 		http.Error(w, "Invalid section", http.StatusBadRequest)
